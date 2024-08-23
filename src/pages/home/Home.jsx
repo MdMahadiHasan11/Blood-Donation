@@ -8,6 +8,7 @@ import Banner from "./slider/banner/Banner";
 import Features from "./features/Features";
 import PatientSays from "./patientSays/PatientSays";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 
 
 
@@ -32,8 +33,14 @@ const Home = () => {
             <PatientSays></PatientSays>
 
 
+{/* category inside create */}
             <div>
-                {user ? 'user ase' : 'user nai'}
+                <Link to={`appointment/${'Braces'}`}>
+                    <button className="btn btn-primary">Braces</button>
+                </Link>
+                <Link to={`appointment/${`Tooth Extraction`}`}>
+                    <button className="btn btn-primary">Tooth Extraction</button>
+                </Link>
             </div>
         </div>
     );

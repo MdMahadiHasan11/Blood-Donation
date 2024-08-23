@@ -1,7 +1,7 @@
 
 import { Fade } from "react-awesome-reveal";
 import { Tooltip } from 'react-tooltip';
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,16 +11,23 @@ import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
 import app from "../../../firebase/firebase.config";
 import { AuthContext } from "../../shareComponent/provider/AuthProvider";
-
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
 
-
+const axiosPublic=useAxiosPublic();
     const { signIn } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
+    // const from = location.state?.from?.pathname || '/' ;
+    console.log(location.state)
+
+
     const [user, setUser] = useState(null);
     const auth = getAuth(app)
+    const captchaRef = useRef(null);
+    const [ disable,setDisable]=useState(true);
 
 
     const googleProvider = new GoogleAuthProvider();
@@ -31,9 +38,21 @@ const Login = () => {
         signInWithPopup(auth, googleProvider)
             .then(result => {
                 const loginUser = result.user;
+                // user store api
+                const userInfo ={
+                    email:result.user?.email,
+                    name:result.user?.displayName
+                }
+                axiosPublic.post('/user',userInfo)
+                .then(res=>{
+
+                })
+
+
                 toast.success("Successfully Login");
-                // console.log(loginUser)
+                
                 setUser(loginUser);
+                
                 navigate(location?.state ? location.state : '/')
             })
             .catch(error => {
@@ -58,6 +77,7 @@ const Login = () => {
                 toast.success("Successfully Login");
                 // console.log(result.user)
                 navigate(location?.state ? location.state : '/')
+                // navigate(from,{replace:true});
             })
             .catch(error => {
                 console.error(error);
@@ -66,6 +86,23 @@ const Login = () => {
 
     }
 
+
+
+    useEffect(()=>{
+        loadCaptchaEnginge(6);
+    },[])
+    const handleValidateCaptcha=(e)=>{
+        // const user_captcha_value = captchaRef.current.value;
+        const user_captcha_value = e.target.value;
+
+        if (validateCaptcha(user_captcha_value)==true) {
+            setDisable(false);
+        }
+   
+        else {
+            setDisable(true);
+        }
+    }
 
 
     return (
@@ -107,8 +144,17 @@ const Login = () => {
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text"><LoadCanvasTemplate /></span>
+                                </label>
+                                <input ref={captchaRef} onBlur={handleValidateCaptcha}  type="text" name="recaptcha" placeholder="Type captcha" className="input input-bordered" required />
+                                <button  className="btn btn-sm">Validate</button>
+                            </div>
+                            
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary font-bold">Login</button>
+                                <button  disabled = {disable} className="btn btn-primary font-bold">Login</button>
                             </div>
                         </form>
                         <div className="flex justify-center items-center"

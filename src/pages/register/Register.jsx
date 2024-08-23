@@ -7,10 +7,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useForm } from "react-hook-form";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../shareComponent/provider/AuthProvider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 
 
 const Register = () => {
+    const axiosPublic = useAxiosPublic();
+
+
     const [registerError, setRegisterError] = useState('');
     const [success, setSuccess] = useState('');
     const [showPass, setShowPass] = useState(false);
@@ -70,16 +75,26 @@ const Register = () => {
             .then(() => {
                 updateUserProfile(name, photoUrl)
                     .then(() => {
-                        toast.success("Successfully Register");
-                        // setUser(result.user)
-
-                        navigate('/')
-                        window.location.reload();
-
+                        // create user entry in the dataBase
+                        const userInfo ={
+                            name:name,
+                            email:email
+                        }
+                        axiosPublic.post('/user',userInfo)
+                        .then(res=>{
+                           if(res.data.insertedId){
+                            Swal.fire({
+                                position: "top-center",
+                                icon: "success",
+                                title: "User create successfully",
+                                showConfirmButton: false,
+                                timer: 2500
+                              });
+                              navigate('/')
+                            //   window.location.reload();
+                           }
+                        })
                     })
-
-
-
             })
             .catch(error => {
                 console.error(error);

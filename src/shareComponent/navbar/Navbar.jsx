@@ -1,10 +1,14 @@
 // import React from 'react';
 import { Tooltip } from 'react-tooltip'
 import { useContext, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import { CgProfile } from "react-icons/cg";
+import { FaCartShopping } from "react-icons/fa6";
+import useAppointment from '../../hooks/useAppointment';
 const Navbar = () => {
+
+    const [ refetch ,appointmentList] =useAppointment();
     const { user, logOut } = useContext(AuthContext);
 
     const handleSignOut = () => {
@@ -34,8 +38,24 @@ const Navbar = () => {
 
     const links = < >
 
-        <li className="font-bold "><NavLink to="/">Home</NavLink></li>
-        <li className="font-bold"><NavLink to="/allNeedVolunteer">Need Volunteer</NavLink></li>
+        <li className="font-bold "><NavLink to="/">
+            Home</NavLink>
+        </li>
+        <li className="font-bold"><NavLink to="/doctorProfile">
+            Doctor Profile</NavLink>
+        </li>
+        <li className="font-bold"><NavLink to="/appointment/Tooth Extraction">Appointment</NavLink>
+        </li>
+
+        <li>
+                <Link to='/dashboard/cart'>
+                    <button className="btn">
+                    <FaCartShopping />
+                        <div className="badge badge-secondary">{appointmentList.length}</div>
+                    </button>
+                </Link>
+            </li>
+
 
 
 
@@ -82,6 +102,7 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
+            
 
 
 
@@ -125,7 +146,7 @@ const Navbar = () => {
 
                 }
                 {/* theme */}
-                <label className="swap swap-rotate">
+                <label className="swap mr-3 swap-rotate">
 
                     {/* this hidden checkbox controls the state */}
                     <input type="checkbox"
@@ -143,8 +164,8 @@ const Navbar = () => {
                 </label>
                 {/* theme end */}
             </div>
-        </div >
+        </div > 
     );
 };
 
-export default Navbar;
+export default Navbar; 
