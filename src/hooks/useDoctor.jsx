@@ -8,7 +8,7 @@ const useDoctor = () => {
 
     // useEffect(() => {
         
-    //         fetch('http://localhost:5000/allDoctor')
+    //         fetch('http://localhost:5000/allDonor')
     //             .then(res => res.json())
     //             .then(data =>{
     //                 setDoctors(data);
@@ -25,7 +25,7 @@ const useDoctor = () => {
     const {data : doctors =[] , isPending : loading ,refetch } = useQuery({
         queryKey:['doctors'],
         queryFn:async()=>{
-            const res= await axiosPublic.get('/allDoctor');
+            const res= await axiosPublic.get('/allDonor');
             // console.log(res.data);
             return res.data
         }

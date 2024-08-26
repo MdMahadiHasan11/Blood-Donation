@@ -49,7 +49,7 @@ const UpdateDoctor = () => {
             }
             // console.log(_id)
 
-            const doctorRes = await axiosSecure.patch(`/allDoctor/${_id}`, doctorInfo)
+            const doctorRes = await axiosSecure.patch(`/allDonor/${_id}`, doctorInfo)
             console.log(doctorRes.data)
             if (doctorRes.data.modifiedCount) {
                 // reset()
@@ -77,7 +77,7 @@ const UpdateDoctor = () => {
             }
             // console.log(_id)
     
-            const doctorRes = await axiosSecure.patch(`/allDoctor/${_id}`, doctorInfo)
+            const doctorRes = await axiosSecure.patch(`/allDonor/${_id}`, doctorInfo)
             console.log(doctorRes.data)
             if (doctorRes.data.modifiedCount) {
                 // reset()

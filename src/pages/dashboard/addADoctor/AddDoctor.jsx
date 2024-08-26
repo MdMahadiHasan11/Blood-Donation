@@ -31,7 +31,7 @@ const AddDoctor = () => {
                 startTime: '2024-05-15T19:00:00.000Z',
                 endTime: '2024-05-15T19:00:00.000Z'
             }
-            const doctorRes = await axiosSecure.post('/allDoctor', doctorInfo)
+            const doctorRes = await axiosSecure.post('/allDonor', doctorInfo)
             console.log(doctorRes.data)
             if (doctorRes.data.insertedId) {
                 reset()

@@ -6,10 +6,16 @@ import { AuthContext } from "../provider/AuthProvider";
 import { CgProfile } from "react-icons/cg";
 import { FaCartShopping } from "react-icons/fa6";
 import useAppointment from '../../hooks/useAppointment';
+import { GrLanguage } from 'react-icons/gr';
+import { FaRegUser } from 'react-icons/fa';
+import useAdmin from '../../hooks/useAdmin';
+import useVolunteer from '../../hooks/useVolunteer';
 const Navbar = () => {
 
-    const [ refetch ,appointmentList] =useAppointment();
+    const [refetch, appointmentList] = useAppointment();
     const { user, logOut } = useContext(AuthContext);
+    const [isAdmin] = useAdmin();
+    const [isVolunteer] = useVolunteer();
 
     const handleSignOut = () => {
         logOut()
@@ -42,26 +48,29 @@ const Navbar = () => {
             Home</NavLink>
         </li>
         <li className="font-bold"><NavLink to="/doctorProfile">
-            Doctor Profile</NavLink>
+            Donation Requests</NavLink>
+        </li>
+        <li className="font-bold"><NavLink to="/blog">
+            Blog</NavLink>
         </li>
         <li className="font-bold"><NavLink to="/appointment/Tooth Extraction">Appointment</NavLink>
         </li>
 
         <li>
-                <Link to='/dashboard/cart'>
-                    <button className="btn">
+            <Link to='/dashboard/cart'>
+                <button className="btn">
                     <FaCartShopping />
-                        <div className="badge badge-secondary">{appointmentList.length}</div>
-                    </button>
-                </Link>
-            </li>
+                    <div className="badge badge-secondary">{appointmentList.length}</div>
+                </button>
+            </Link>
+        </li>
 
 
 
 
     </>
     return (
-        <div className="navbar fixed z-10 bg-opacity-30 bg-black max-w-screen-xl text-white ">
+        <div className="navbar  z-10  bg-[#b71c1c] border-b-2 border-[#e53935] max-w-screen-xl text-white ">
             <div className="navbar-start">
                 <div className="dropdown z-50">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -72,9 +81,9 @@ const Navbar = () => {
                     </ul>
                 </div>
                 {/* bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 */}
-                <NavLink to="/" className="     font-bold lg:text-3xl md:text-2xl text-xl"><p className='px-2 rounded-3xl '>Doctor House</p></NavLink>
+                <NavLink to="/" className="     font-bold lg:text-3xl md:text-2xl text-xl"><p className='px-2 rounded-3xl '>BloodBridge</p></NavLink>
             </div>
-            <div className="navbar-center hidden lg:flex">
+            <div className="navbar-center hidden lg:flex justify-center items-center">
                 <ul className="menu menu-horizontal px-1 text-lg">
                     {links}
                     <div className="dropdown dropdown-end">
@@ -102,51 +111,85 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
-            
+
 
 
 
             <div className="navbar-end ">
+                {
+                    user ?
 
+                        // 
+                        <div className="dropdown mr-4 dropdown-end">
+                            {/* btn-ghost rounded-btn */}
+                            <div tabIndex={0} role="button" className=" font-bold   text-lg ">
+                                <div data-tooltip-id="my-tooltip" className=" relative group">
+                                    <img src={user.photoURL ? user.photoURL : `https://i.ibb.co/qW320MT/images.jpg`} className="rounded-full w-10 h-10" />
+                                </div>
+                            </div>
+                            <ul tabIndex={0} className={theme === 'dark' ? 'menu dropdown-content z-[10] p-2  shadow bg-base-300 rounded-box w-52 mt-4' : 'menu dropdown-content z-[10] p-2 text-black shadow bg-base-300 rounded-box w-52 mt-4'}>
+                                {
+                                    isAdmin ?
+                                        <>
+                                        
+                                            <li className="font-bold"><NavLink to="/updateProfile">Update Admin Profile</NavLink></li>
+                                            <li className="font-bold"><NavLink to="/adminDashboard"> admin Dashboard</NavLink></li>
+                                            <li className="font-bold">
+                                                <button onClick={handleSignOut} className="">
+                                                    Log Out
+                                                </button>
+                                            </li>
+                                        </> :
+                                        isVolunteer ?
+                                            <>
+                                                <li className="font-bold"><NavLink to="/updateProfile">Update Volunteer Profile</NavLink></li>
+                                                <li className="font-bold"><NavLink to="/sellerDashboard"> seller Dashboard</NavLink></li>
+                                                <li className="font-bold"><button onClick={handleSignOut} className="">
 
+                                                    Log Out
+                                                </button></li>
+                                            </> :
+                                            <>
+                                                <li className="font-bold"><NavLink to="/updateProfile">Update Donor Profile</NavLink></li>
+                                                <li className="font-bold"><NavLink to="/userDashboard"> User Dashboard</NavLink></li>
+                                                <li className="font-bold"><button onClick={handleSignOut} className="">
 
+                                                    Log Out
+                                                </button></li>
+                                            </>
 
-
-                {/* {
-                    user && <span className="font-bold mr-4"><NavLink to="">
-                        <div data-tooltip-id="my-tooltippp" className=" relative group">
-                            <img src={user.photoURL ? user.photoURL : `https://i.ibb.co/qW320MT/images.jpg`} className="rounded-full w-10 h-10" />
-
-                            <Tooltip className='z-10'
-                                id="my-tooltippp"
-                                content={user.displayName ? user.displayName : "User"}
-                                events={['hover']}
-                            />
-
-
-
-                         
+                                }
+                            </ul>
                         </div>
 
-                    </NavLink></span>
-                } */}
+                        // 
+                        : <span>
+                            <button className="  px-5 md:mr-4 font-bold md:text-lg">
+                                <NavLink to="/login">Join US</NavLink>
+                            </button>
+                            <button className=" font-bold md:mr-4 text-xl">
+                                <NavLink to="/register"><FaRegUser /></NavLink>
+                            </button>
 
-                {
-                    user ? <button onClick={handleSignOut} className="btn bg-orange-600 text-lg mr-4">
-                        Log Out
-                    </button> : <span>
-                        <button className="btn px-7 mr-4 bg-orange-600 text-lg">
-                            <NavLink to="/login">Login</NavLink>
-                        </button>
-                        <button className="btn bg-orange-600 mr-4 text-lg">
-                            <NavLink to="/register">Register</NavLink>
-                        </button>
-
-                    </span>
+                        </span>
 
                 }
+
+                {/* language */}
+                <div className="dropdown">
+                    <div tabIndex={0} role="button" className=" m-1 mx-2 text-2xl"><GrLanguage /></div>
+                    <ul tabIndex={0} className={theme === 'dark' ? 'dropdown-content font-bold z-10 menu p-2 shadow bg-base-100 rounded-box w-24' : 'dropdown-content z-10 font-bold menu p-2 shadow text-black bg-base-100 mb-3 rounded-box w-24'}>
+                        <li><a>English</a></li>
+                        <li><a>Hindi</a></li>
+                        <li><a>Bangla</a></li>
+                    </ul>
+                </div>
                 {/* theme */}
-                <label className="swap mr-3 swap-rotate">
+
+                {/* <ReactLanguageSelect
+                    searchable={true}
+                    searchPlaceholder="Search for a language" /> */}
+                <label className="swap mr-4 ml-2 swap-rotate">
 
                     {/* this hidden checkbox controls the state */}
                     <input type="checkbox"
@@ -164,8 +207,8 @@ const Navbar = () => {
                 </label>
                 {/* theme end */}
             </div>
-        </div > 
+        </div >
     );
 };
 
-export default Navbar; 
+export default Navbar;

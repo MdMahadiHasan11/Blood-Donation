@@ -24,7 +24,7 @@ const ManageDoctor = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
 
-                const res = await axiosSecure.delete(`/allDoctor/${id}`)
+                const res = await axiosSecure.delete(`/allDonor/${id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
                             Swal.fire({

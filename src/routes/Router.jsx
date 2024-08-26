@@ -77,7 +77,7 @@ const Router = createBrowserRouter([
             {
                 path: "updateDoctor/:id",
                 element: <AdminRoute><UpdateDoctor></UpdateDoctor></AdminRoute>,
-                loader: ({params}) => fetch(`http://localhost:5000/allDoctor/${params.id}`)
+                loader: ({params}) => fetch(`http://localhost:5000/allDonor/${params.id}`)
             },
         ]
     },
