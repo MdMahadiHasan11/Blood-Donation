@@ -56,14 +56,14 @@ const Navbar = () => {
         <li className="font-bold"><NavLink to="/appointment/Tooth Extraction">Appointment</NavLink>
         </li>
 
-        <li>
+        {/* <li>
             <Link to='/dashboard/cart'>
-                <button className="btn">
+                <div className="btn">
                     <FaCartShopping />
                     <div className="badge badge-secondary">{appointmentList.length}</div>
-                </button>
+                </div>
             </Link>
-        </li>
+        </li> */}
 
 
 
@@ -86,7 +86,7 @@ const Navbar = () => {
             <div className="navbar-center hidden lg:flex justify-center items-center">
                 <ul className="menu menu-horizontal px-1 text-lg">
                     {links}
-                    <div className="dropdown dropdown-end">
+                    {/* <div className="dropdown dropdown-end">
 
                         <div tabIndex={0} role="button" className="btn font-bold btn-ghost  text-lg rounded-btn">My Profile <CgProfile /> </div>
                         <ul tabIndex={0} className="menu dropdown-content z-[10] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
@@ -94,13 +94,13 @@ const Navbar = () => {
                             <li className="font-bold"><NavLink to="/needVolunteer">Add Volunteer Post</NavLink></li>
                             <li className="font-bold"><NavLink to="/clintRequest">All Volunteer Request</NavLink></li>
                         </ul>
-                    </div>
+                    </div> */}
 
 
 
                 </ul>
             </div>
-            <div className="navbar-center flex lg:hidden">
+            {/* <div className="navbar-center flex lg:hidden">
                 <div className="dropdown dropdown-end">
 
                     <div tabIndex={0} role="button" className="btn font-bold btn-ghost  text-4xl rounded-btn mx-1"><CgProfile /> </div>
@@ -110,11 +110,9 @@ const Navbar = () => {
                         <li className="font-bold"><NavLink to="/clintRequest">Clint Request</NavLink></li>
                     </ul>
                 </div>
-            </div>
+            </div> */}
 
-
-
-
+            {/* nav end */}
             <div className="navbar-end ">
                 {
                     user ?
@@ -131,9 +129,9 @@ const Navbar = () => {
                                 {
                                     isAdmin ?
                                         <>
-                                        
+
                                             <li className="font-bold"><NavLink to="/updateProfile">Update Admin Profile</NavLink></li>
-                                            <li className="font-bold"><NavLink to="/adminDashboard"> admin Dashboard</NavLink></li>
+                                            <li className="font-bold"><NavLink to="/dashboard/cart"> admin Dashboard</NavLink></li>
                                             <li className="font-bold">
                                                 <button onClick={handleSignOut} className="">
                                                     Log Out
@@ -143,7 +141,7 @@ const Navbar = () => {
                                         isVolunteer ?
                                             <>
                                                 <li className="font-bold"><NavLink to="/updateProfile">Update Volunteer Profile</NavLink></li>
-                                                <li className="font-bold"><NavLink to="/sellerDashboard"> seller Dashboard</NavLink></li>
+                                                <li className="font-bold"><NavLink to="dashboard/cart"> seller Dashboard</NavLink></li>
                                                 <li className="font-bold"><button onClick={handleSignOut} className="">
 
                                                     Log Out
@@ -151,7 +149,7 @@ const Navbar = () => {
                                             </> :
                                             <>
                                                 <li className="font-bold"><NavLink to="/updateProfile">Update Donor Profile</NavLink></li>
-                                                <li className="font-bold"><NavLink to="/userDashboard"> User Dashboard</NavLink></li>
+                                                <li className="font-bold"><NavLink to="dashboard/cart"> User Dashboard</NavLink></li>
                                                 <li className="font-bold"><button onClick={handleSignOut} className="">
 
                                                     Log Out

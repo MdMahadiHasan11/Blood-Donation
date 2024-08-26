@@ -4,9 +4,11 @@ import { FaAd, FaHistory, FaHome } from "react-icons/fa";
 import { FaCartShopping, FaPersonRifle } from "react-icons/fa6";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from '../hooks/useAdmin'
+import useVolunteer from "../hooks/useVolunteer";
 
 const DashBoard = () => {
     const [isAdmin ]= useAdmin();
+    const [isVolunteer]=useVolunteer();
 
 
 
@@ -17,7 +19,7 @@ const DashBoard = () => {
                     {
                         isAdmin ?
                             <>
-                                <li><NavLink to='/dashboard/adminDashboard'> <FaCartShopping />Dashboard</NavLink></li>
+                                <li><NavLink to='/dashboard/adminDashboard'> <FaCartShopping />Dashboardd</NavLink></li>
 
                                 <li><NavLink to='/dashboard/allUser'> <FaAd />All Users</NavLink></li>
 
